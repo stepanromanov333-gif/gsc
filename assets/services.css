@@ -1,0 +1,200 @@
+/* ============================================================
+   GSC — "Услуги и возможности" (Tilda T853) premium redesign
+   Image-forward cinematic cards. Photo fills the card, a deep
+   sea-toned gradient carries the text, the tile lifts and the
+   photo pushes in on hover. Title + desc + button stack in flow
+   (bottom-aligned) so nothing ever overlaps.
+   Scope: #allrecords only. Markup untouched (CSS override).
+   ============================================================ */
+
+/* ---- section header ---------------------------------------- */
+/* heading is a full-bleed sea-toned banner across the whole screen */
+#allrecords .t-section__title {
+  display: block;
+  /* break out of Tilda's centered container to full viewport width */
+  width: 100vw;
+  margin: 0 calc(50% - 50vw) 40px;     /* full-bleed + 40px below */
+  box-sizing: border-box;
+  font-family: 'Romul2', 'TildaSans', Georgia, serif;
+  letter-spacing: 0.01em;
+  text-align: center;
+  text-wrap: balance;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff;
+  background-image: linear-gradient(100deg, #0a2436 0%, #134f63 55%, #1d6f86 100%);
+  padding: 30px 24px 32px;
+  box-shadow: 0 16px 40px -22px rgba(10, 36, 54, 0.55);
+}
+#allrecords .t-section__descr {
+  color: #4a5b66;            /* ≥4.5:1 on white */
+  max-width: 60ch;
+  margin: 0 auto 48px !important;   /* even rhythm down to the cards */
+}
+
+/* ---- grid rhythm: even 4-up that fills the container ------- */
+#allrecords .t853__container {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr));   /* strictly equal columns */
+  gap: 26px 24px;
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+#allrecords .t853__col {
+  width: auto !important;
+  max-width: none !important;
+  flex: initial !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+@media (max-width: 980px) {
+  #allrecords .t853__container { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 480px) {
+  #allrecords .t853__container { grid-template-columns: minmax(0, 1fr); }
+}
+#allrecords .t853__col { margin: 0 !important; padding: 0 !important; }
+
+/* ---- the card: a bottom-aligned flex column ---------------- */
+#allrecords .t-card__col {
+  position: relative;
+  height: 100%;
+  min-height: 480px;            /* grows with content; rows align via grid stretch */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;     /* copy hugs the bottom */
+  border-radius: 16px;
+  overflow: hidden;
+  isolation: isolate;
+  box-shadow: 0 12px 28px -14px rgba(8, 28, 40, 0.40);
+  transition:
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+/* photo gets a guaranteed minimum so the card reads image-first even
+   when the text is long (Georgian); the description shows by default. */
+#allrecords .t853__col { align-self: stretch; }
+#allrecords .t-card__col::after {     /* hairline inner edge */
+  content: "";
+  position: absolute; inset: 0;
+  border-radius: 16px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.10);
+  pointer-events: none; z-index: 5;
+}
+#allrecords .t-card__col:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 30px 56px -18px rgba(8, 28, 40, 0.55);
+}
+
+/* content wrapper is static so the photo can anchor to the card */
+#allrecords .t853__content {
+  position: static;
+  display: contents;             /* let textwrapper sit directly in the flex column */
+}
+
+/* ---- photo: absolute, fills the whole card, zooms on hover -- */
+#allrecords .t853__imgwrapper {
+  position: absolute !important;
+  inset: 0;
+  width: 100%; height: 100%;
+  margin: 0 !important; padding: 0 !important;
+  overflow: hidden;
+  z-index: 1;
+}
+#allrecords .t853__bgimg {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  padding: 0 !important;
+  background-size: cover; background-position: center;
+  transform: scale(1.001);
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+#allrecords .t-card__col:hover .t853__bgimg { transform: scale(1.08); }
+
+/* sea-toned gradient for legibility */
+#allrecords .t853__imgwrapper::after {
+  content: "";
+  position: absolute; inset: 0; z-index: 2;
+  background: linear-gradient(
+    to top,
+    rgba(6, 20, 29, 0.95) 0%,
+    rgba(6, 20, 29, 0.80) 26%,
+    rgba(6, 20, 29, 0.36) 54%,
+    rgba(6, 20, 29, 0.06) 80%,
+    rgba(6, 20, 29, 0.00) 100%
+  );
+}
+
+/* ---- copy (in flow, above the photo) ----------------------- */
+#allrecords .t853__textwrapper {
+  position: relative;
+  z-index: 3;
+  padding: 0 24px 10px;
+  text-align: left;
+}
+#allrecords .t-card__title {
+  margin: 0 0 9px;
+  font-family: 'Romul2', 'TildaSans', Georgia, serif;
+  font-size: 23px;
+  line-height: 1.16;
+  letter-spacing: 0.005em;
+}
+#allrecords .t-card__col .t-card__title a.t-card__link,
+#allrecords .t-card__col .t-card__title a,
+#allrecords .t-card__col .t-card__title .t-card__link {
+  color: #ffffff !important;
+  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.35);
+}
+#allrecords .t-card__descr {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.88) !important;
+  font-size: 14.5px;
+  line-height: 1.5;
+}
+#allrecords .t-card__descr br { display: none; }
+/* description is always visible (no hover-collapse) so long text — e.g.
+   Georgian — never overflows or collides with the button. */
+
+/* ---- action (in flow, below the copy) ---------------------- */
+#allrecords .t-card__btn-wrapper {
+  position: relative;
+  z-index: 3;
+  margin: 0;
+  padding: 4px 24px 24px;
+  display: flex;
+  justify-content: flex-start;
+}
+#allrecords .t-btnflex.t-btnflex_type_button {
+  background-color: #1f5bff !important;
+  color: #ffffff !important;
+  border-radius: 100px !important;
+  padding: 13px 26px !important;
+  font-size: 14px !important;
+  box-shadow: 0 8px 22px -8px rgba(31, 91, 255, 0.7) !important;
+  transition:
+    background-color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+#allrecords .t-card__col:hover .t-btnflex.t-btnflex_type_button {
+  background-color: #3d72ff !important;
+  box-shadow: 0 12px 30px -8px rgba(31, 91, 255, 0.85) !important;
+}
+
+/* ---- mobile: gentle press --------------------------------- */
+@media (max-width: 980px) {
+  #allrecords .t853__container { gap: 18px; }
+  #allrecords .t-card__col { min-height: 360px; }
+  #allrecords .t-card__title { font-size: 21px; }
+  #allrecords .t-card__col:active { transform: scale(0.985); }
+}
+
+/* ---- reduced motion ---------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  #allrecords .t-card__col,
+  #allrecords .t853__bgimg,
+  #allrecords .t-card__descr,
+  #allrecords .t-btnflex.t-btnflex_type_button { transition: none !important; }
+  #allrecords .t-card__col:hover { transform: none; }
+  #allrecords .t-card__col:hover .t853__bgimg { transform: scale(1.001); }
+}

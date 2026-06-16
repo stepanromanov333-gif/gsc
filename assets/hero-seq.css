@@ -1,0 +1,213 @@
+/* ============================================================
+   GSC Hero — scroll-driven cinematic story
+   A continuous boat fly-through (canvas frame sequence) with
+   meaning blocks of text fading in/out on top as you scroll.
+   Frames: assets/hero-seq/ (150 @ 1264x720).
+   ============================================================ */
+
+.gsc-hero {
+  position: relative;
+  width: 100%;
+  /* Tall scroll track: long enough to host all story screens.
+     ~440vh => faster scrub so text appears sooner (was 580vh). */
+  height: 440vh;
+  background: #0b1f2a;
+  margin: 0;
+}
+
+.gsc-hero__sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+.gsc-hero__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Cinematic darkening for legible text over bright footage */
+.gsc-hero__scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,0.45), rgba(0,0,0,0.12) 32%, rgba(0,0,0,0.16) 68%, rgba(0,0,0,0.5));
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ---- story screens stacked in the centre ---- */
+.gsc-hero__screens {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.gsc-hero__screen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 8vw;
+  opacity: 0;
+  will-change: opacity, transform;
+}
+
+.gsc-hero__title {
+  margin: 0 0 14px;
+  font-family: 'Romul2', 'TildaSans', Georgia, serif;
+  font-weight: 400;
+  color: #f4eded;
+  font-size: 58px;
+  line-height: 1.08;
+  letter-spacing: 0.05em;
+  text-shadow: 0 2px 30px rgba(0,0,0,0.55);
+}
+
+.gsc-hero__subtitle {
+  margin: 0;
+  font-family: 'Romul2', 'TildaSans', Georgia, serif;
+  font-weight: 400;
+  color: #fbf8f8;
+  font-size: 30px;
+  letter-spacing: 0.08em;
+  text-shadow: 0 2px 22px rgba(0,0,0,0.55);
+}
+
+/* narrative paragraph screens */
+.gsc-hero__lead {
+  margin: 0;
+  max-width: 920px;
+  font-family: 'Romul2', 'TildaSans', Georgia, serif;
+  font-weight: 400;
+  color: #fdfcfc;
+  font-size: 34px;
+  line-height: 1.45;
+  letter-spacing: 0.01em;
+  text-shadow: 0 2px 26px rgba(0,0,0,0.6);
+}
+.gsc-hero__lead strong { font-weight: 600; color: #ffffff; }
+.gsc-hero__lead .accent {
+  display: block;
+  margin-top: 26px;
+  font-size: 27px;
+  color: #cfe3ff;
+  letter-spacing: 0.04em;
+}
+
+/* CTA screen */
+.gsc-hero__btn {
+  pointer-events: auto;
+  display: inline-block;
+  padding: 18px 50px;
+  background-color: #1771f1;
+  color: #ffffff !important;      /* beat Tilda's default orange #allrecords a */
+  font-family: 'Romul2', 'TildaSans', sans-serif;
+  font-size: 19px;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  border-radius: 28px;
+  box-shadow: 0 10px 40px rgba(23,113,241,0.4);
+  transition: background-color .2s ease-in-out, transform .2s ease-in-out;
+}
+.gsc-hero__btn,
+.gsc-hero__btn:link,
+.gsc-hero__btn:visited,
+.gsc-hero__btn:hover,
+.gsc-hero__btn:active { color: #ffffff !important; }
+.gsc-hero__btn:hover { background-color: #0f5fd6; transform: translateY(-2px); }
+.gsc-hero__cta-kicker {
+  margin: 0 0 22px;
+  font-family: 'Romul2', 'TildaSans', Georgia, serif;
+  color: #f4eded;
+  font-size: 40px;
+  letter-spacing: 0.05em;
+  text-shadow: 0 2px 26px rgba(0,0,0,0.6);
+}
+
+/* scroll hint chevron (start only) */
+.gsc-hero__hint {
+  position: absolute;
+  left: 50%;
+  bottom: 40px;
+  z-index: 2;
+  width: 24px;
+  height: 24px;
+  border-right: 2px solid rgba(255,255,255,0.9);
+  border-bottom: 2px solid rgba(255,255,255,0.9);
+  rotate: 45deg;
+  translate: -50% 0;
+  animation: gsc-hero-bounce 1.8s ease-in-out infinite;
+}
+@keyframes gsc-hero-bounce {
+  0%, 100% { translate: -50% 0; opacity: .9; }
+  50%      { translate: -50% 10px; opacity: .4; }
+}
+
+/* preload progress bar */
+.gsc-hero__loader {
+  position: absolute;
+  left: 0; bottom: 0; height: 3px; width: 0%;
+  background: #1771f1; z-index: 3;
+  transition: width .15s linear, opacity .4s ease .3s;
+}
+
+/* quick-skip pill — always visible, jumps straight to the services block */
+.gsc-hero__skip {
+  position: absolute;
+  right: 28px;
+  bottom: 34px;
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 18px;
+  font-family: 'Romul2', 'TildaSans', Georgia, serif;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  color: #ffffff;
+  background: rgba(10, 36, 54, 0.42);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 30px;
+  cursor: pointer;
+  text-decoration: none;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  transition: background-color .2s ease, transform .2s ease, border-color .2s ease;
+}
+.gsc-hero__skip::after { content: "\2193"; font-size: 15px; line-height: 1; }
+.gsc-hero__skip:hover {
+  background: rgba(23, 113, 241, 0.9);
+  border-color: rgba(23, 113, 241, 0.9);
+  transform: translateY(-2px);
+  color: #ffffff;
+}
+
+/* Hide the original white-background intro blocks now retold in the hero.
+   (services / gallery / contacts below are untouched.) */
+#rec768297952, #rec768297953, #rec768297954,
+#rec768297955, #rec768297956 { display: none !important; }
+
+/* Section snap (hero -> gallery) is handled in JS (hero-seq.js) for a
+   full, decisive transition on a light scroll — not a soft CSS magnet. */
+
+@media (max-width: 980px) {
+  .gsc-hero { height: 400vh; }
+  .gsc-hero__title { font-size: 36px; }
+  .gsc-hero__subtitle { font-size: 20px; }
+  .gsc-hero__lead { font-size: 23px; }
+  .gsc-hero__lead .accent { font-size: 19px; }
+  .gsc-hero__cta-kicker { font-size: 27px; }
+  .gsc-hero__btn { font-size: 16px; padding: 15px 38px; }
+  .gsc-hero__skip { right: 16px; bottom: 22px; font-size: 13px; padding: 8px 14px; }
+}

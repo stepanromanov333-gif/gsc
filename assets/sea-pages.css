@@ -1,0 +1,159 @@
+/* ============================================================
+   GSC — shared sea-premium styling for inner pages
+   (boats / registr / school_ru). Class-based so it applies to
+   every section heading, contacts panel and link on the page.
+   Brand: navy + turquoise + Romul.
+   ============================================================ */
+
+:root {
+  --gsc-teal: #5cc5d8;
+}
+
+/* hide Tilda promo badge ("Made on Tilda") */
+.t-tildalabel { display: none !important; }
+
+/* ---- turquoise links instead of Tilda's default orange ----- */
+#allrecords .t-text a,
+#allrecords .t-descr a,
+#allrecords .t-name a {
+  color: var(--gsc-teal) !important;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+#allrecords .t-text a:hover,
+#allrecords .t-descr a:hover { color: #8ad9e8 !important; }
+
+/* ============================================================
+   Section heading -> full-bleed sea banner (like Услуги)
+   t220 / t050 are Tilda's standalone section-title blocks.
+   ============================================================ */
+#allrecords .t220__title,
+#allrecords .t050__title {
+  display: block;
+  width: 100vw;
+  margin: 0 calc(50% - 50vw) 44px;
+  box-sizing: border-box;
+  font-family: 'Romul2', 'TildaSans', Georgia, serif;
+  letter-spacing: 0.01em;
+  text-align: center;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff;
+  background-image: linear-gradient(100deg, #0a2436 0%, #134f63 55%, #1d6f86 100%);
+  padding: 30px 24px 32px;
+  box-shadow: 0 16px 40px -22px rgba(10, 36, 54, 0.55);
+}
+
+/* ---- hero title (t102) — white Romul on the cover ---------- */
+#allrecords .t102__title,
+#allrecords .t102__title * {
+  font-family: 'Romul2', 'TildaSans', Georgia, serif !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff;
+  text-shadow: 0 2px 26px rgba(0, 0, 0, 0.5);
+}
+
+/* ============================================================
+   Contacts panel (any T570) — navy + turquoise, like main page
+   ============================================================ */
+#allrecords .t570__col_text,
+#allrecords .t570__contentbox {
+  background-color: #0a2436 !important;
+  background-image: linear-gradient(155deg, #0c2a44 0%, #071a29 100%) !important;
+}
+#allrecords .t570__contentwrapper.t570__padding_lg { padding: 56px 60px; }
+#allrecords .t570__title {
+  font-family: 'Romul2', 'TildaSans', Georgia, serif;
+  color: #ffffff;
+  letter-spacing: 0.01em;
+  margin-bottom: 30px;
+}
+#allrecords .t570__descr { color: #ffffff; line-height: 2.0; }
+#allrecords .t570__text { color: rgba(255, 255, 255, 0.70); margin-top: 22px; }
+/* muted sea-steel label before phone/email (e.g. "Телефон:") */
+#allrecords .gsc-contact-label { color: #8fb6cb; margin-right: 4px; }
+#allrecords .t570__text a { color: var(--gsc-teal) !important; font-weight: 500; }
+#allrecords .t570__text a:hover { color: #8ad9e8 !important; }
+/* clickable phone/email — white, turquoise on hover (beat .t-descr a) */
+#allrecords .t570__descr a.gsc-contact-link,
+#allrecords .gsc-contact-link {
+  color: #ffffff !important;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 1px;
+  transition: color 0.22s ease, border-color 0.22s ease;
+}
+#allrecords .t570__descr a.gsc-contact-link:hover,
+#allrecords .gsc-contact-link:hover {
+  color: #5cc5d8 !important;
+  border-bottom-color: #5cc5d8;
+}
+#allrecords .t570__col_text .t-sociallinks__wrapper { gap: 12px; margin-top: 30px; }
+#allrecords .t570__col_text .t-sociallinks__item a {
+  display: inline-flex;
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), filter 0.2s ease;
+}
+/* footer "Пользовательское соглашение" link — smooth hover */
+#allrecords .t185__text,
+#allrecords .t185 a { transition: color 0.2s ease; }
+#allrecords .t570__col_text .t-sociallinks__item a:hover {
+  transform: translateY(-4px);
+  filter: brightness(1.15) saturate(1.2);
+}
+
+/* ============================================================
+   Team / advantage circles (t524) — turquoise ring + lift
+   ============================================================ */
+#allrecords .t524__col { transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1); }
+#allrecords .t524__col:hover { transform: translateY(-6px); }
+#allrecords .t524__bgimg.t524__img_circle {
+  transition: box-shadow 0.4s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+#allrecords .t524__col:hover .t524__bgimg.t524__img_circle {
+  box-shadow: 0 0 0 3px rgba(92, 197, 216, 0.85), 0 18px 36px -12px rgba(10, 36, 54, 0.5);
+}
+#allrecords .t524__persname { font-family: 'Romul2', 'TildaSans', Georgia, serif; }
+
+/* ---- Boat-model cards (t776) — Romul titles ---------------- */
+#allrecords .t776__title,
+#allrecords .t776__descr a { font-family: 'Romul2', 'TildaSans', Georgia, serif; }
+
+/* ---- Yacht booking buttons (t764) — pill like the RU version
+   (the EN fleet page's project CSS lacks the base t-btnflex style,
+   so define the full pill here) ------------------------------ */
+#allrecords .t764 a.t-btnflex.t-btnflex_type_button,
+#allrecords a.t764__btn-left {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 34px !important;
+  background-color: #0260e8 !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 30px !important;
+  font-size: 16px;
+  line-height: 1;
+  text-decoration: none !important;
+  box-shadow: 0 8px 22px -8px rgba(2, 96, 232, 0.6);
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+#allrecords .t764 a.t-btnflex.t-btnflex_type_button:hover,
+#allrecords a.t764__btn-left:hover {
+  background-color: #0250cc !important;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px -8px rgba(2, 96, 232, 0.75);
+}
+#allrecords .t764 .t-btnflex__text,
+#allrecords .t764__btn-left .t-btnflex__text { color: #ffffff !important; }
+
+/* ---- reduced motion ---------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  #allrecords .t570__col_text .t-sociallinks__item a { transition: none !important; }
+  #allrecords .t570__col_text .t-sociallinks__item a:hover { transform: none; }
+}
+
+/* ---- mobile ------------------------------------------------ */
+@media (max-width: 980px) {
+  #allrecords .t220__title,
+  #allrecords .t050__title { padding: 22px 18px 24px; margin-bottom: 32px; }
+  #allrecords .t570__contentwrapper.t570__padding_lg { padding: 40px 28px; }
+}
